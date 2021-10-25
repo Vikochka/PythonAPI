@@ -12,8 +12,8 @@ class JsonReader:
         full_json = self.full_json
 
     def json_reader(self, path):
-        # filename = os.path.join(self.dir, path)
-        f = open(path, 'r')
+        filename = os.path.join(self.dir, path)
+        f = open(filename, 'r')
         self.full_json = json.loads(f.read())
         return self.full_json
 

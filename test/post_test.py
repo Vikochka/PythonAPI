@@ -1,32 +1,34 @@
 from pages.post_page import PostsPage
+from faker import Faker
+import allure
 
 
+@allure.feature('Create post')
 def test_create_post():
-    postModal = {
+    post_modal = {
         "userId": 1,
         "id": 101,
-        "title": "temporibus sit alias delectus eligendi possimus magni",
-        "body": "quo deleniti praesentium dicta non quod\naut est molestias\nmolestias et officia quis nihil\nitaque "
-                "dolorem quia "
+        "title": Faker().name(),
+        "body": Faker().text()
     }
     p = PostsPage()
-    p.post_post('https://jsonplaceholder.typicode.com/posts', postModal)
-    p.validation_post_post(101, '1', 201)
+    p.post_post('https://jsonplaceholder.typicode.com/posts', post_modal, 201)
+    p.validation_post_post(101, 1)
 
 
 def test_get_error_post():
     p = PostsPage()
-    p.get_post('https://jsonplaceholder.typicode.com/posts/', '150')
+    p.get_post('https://jsonplaceholder.typicode.com/posts/', '150', 404)
     p.validation_post(404, 150)
 
 
 def test_get_all_posts():
     p = PostsPage()
-    p.get_all_posts('https://jsonplaceholder.typicode.com/posts/')
-    p.validation_all_posts(200)
+    p.get_all_posts('https://jsonplaceholder.typicode.com/posts/', 200)
+    p.validation_all_posts()
 
 
 def test_get_post():
     p = PostsPage()
-    p.get_post('https://jsonplaceholder.typicode.com/posts/', '99')
+    p.get_post('https://jsonplaceholder.typicode.com/posts/', '99', 200)
     p.validation_post(200, 99)

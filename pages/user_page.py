@@ -1,4 +1,4 @@
-import requests
+import allure
 from loguru import logger
 from framework.BaseAdapter import BaseAdapter
 from json_reader import JsonReader
@@ -10,30 +10,32 @@ class UserPage(BaseAdapter):
     def __init__(self):
         res = self.response
 
-    def get_all_users(self, base_url):
-        self.response = requests.get(base_url)
+    @allure.step('Get all users')
+    def get_all_users(self, base_url, status_code):
+        self.response = self.get(base_url, status_code)
         logger.info(self.response.text)
 
-    def get_post(self, base_url, id):
-        self.response = requests.get(base_url + id)
+    @allure.step('Get one user')
+    def get_user(self, base_url, id, status_code):
+        self.response = self.get(base_url + id, status_code)
         logger.info(self.response.text)
 
-    def validation_all_users(self, status_code):
-        posts = self.response.json()
-        assert posts == JsonReader().json_reader('E://iTechArt//Python//PythonAPI//exected_result//users.json')
-        assert self.response.status_code == status_code
-        assert self.response.headers["Content-type"] == "application/json; charset=utf-8"
-        for items in posts:
-            assert posts[5 - 1] == JsonReader().json_reader_get_part(
-                'E://iTechArt//Python//PythonAPI//exected_result//users.json', 5)
+    @allure.step('Users validation')
+    def validation_all_users(self):
+        users = self.response.json()
+        assert users == JsonReader().json_reader('exected_result//users.json')
+        for items in users:
+            assert users[5 - 1] == JsonReader().json_reader_get_part(
+                'exected_result//users.json', 5), \
+                f'Actual user is not equal {users}'
 
+    @allure.step('User validation')
     def validation_user(self, status_code, number):
-        post = self.response.json()
-        logger.info(post)
-        assert self.response.headers["Content-type"] == "application/json; charset=utf-8"
-        assert self.response.status_code == status_code
+        users = self.response.json()
         if status_code != 404:
-            assert post == JsonReader().json_reader_get_part(
-                'E://iTechArt//Python//PythonAPI//exected_result//users.json', number)
+            assert users == JsonReader().json_reader_get_part(
+                'exected_result//users.json', number), \
+                f'Actual user is not equal {users}'
         else:
-            assert post == JsonReader().json_reader('E://iTechArt//Python//PythonAPI//exected_result//error.json')
+            assert users == JsonReader().json_reader('exected_result//error.json'), \
+                f'Actual user is not empty {users}'
