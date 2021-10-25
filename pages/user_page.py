@@ -32,10 +32,20 @@ class UserPage(BaseAdapter):
     @allure.step('User validation')
     def validation_user(self, status_code, number):
         users = self.response.json()
+
         if status_code != 404:
+
+            with allure.step('Expected result'):
+                print(JsonReader().json_reader_get_part(
+                    'exected_result//users.json', number))
+
             assert users == JsonReader().json_reader_get_part(
                 'exected_result//users.json', number), \
                 f'Actual user is not equal {users}'
         else:
+            with allure.step('Expected result'):
+                print(JsonReader().json_reader_get_part(
+                    'exected_result//error.json', number))
+
             assert users == JsonReader().json_reader('exected_result//error.json'), \
                 f'Actual user is not empty {users}'
