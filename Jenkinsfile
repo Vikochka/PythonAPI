@@ -8,7 +8,7 @@ node {
       bat "${scannerHome}/bin/sonar-scanner"
     }
   }
-   stage('reports') {
+  stage('reports') {
     steps {
      script {
              allure([
@@ -20,5 +20,5 @@ node {
              ])
      }
     }
-   }
+  }
 }
