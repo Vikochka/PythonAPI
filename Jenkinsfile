@@ -14,7 +14,6 @@ node {
            bat "python -m pytest --alluredir results"
   }
   stage('reports') {
-    steps {
      script {
              allure([
                      includeProperties: false,
@@ -24,6 +23,5 @@ node {
                      results: [[path: 'target/allure-results']]
              ])
      }
-    }
   }
 }
