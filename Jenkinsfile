@@ -8,6 +8,11 @@ node {
       bat "${scannerHome}/bin/sonar-scanner"
     }
   }
+  stage('Build') {
+           git 'https://github.com/Vikochka/PythonAPI.git'
+           // To run Maven on a Windows agent, use
+           bat "python -m pytest --alluredir results"
+  }
   stage('reports') {
     steps {
      script {
