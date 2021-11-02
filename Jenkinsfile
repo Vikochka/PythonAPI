@@ -13,15 +13,17 @@ node {
            // To run Maven on a Windows agent, use
            bat "python -m pytest --alluredir results"
   }
-  stage('reports') {
-     script {
+  post('Reports') {
+    always{
+    script {
              allure([
                      includeProperties: false,
                      jdk: '',
                      properties: [],
                      reportBuildPolicy: 'ALWAYS',
-                     results: [[path: 'target/allure-results']]
+                     results: [[path: 'allureresults']]
              ])
      }
+    }
   }
 }
