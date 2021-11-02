@@ -26,6 +26,7 @@ node {
                              results: [[path: '../results']]
                      ])
              }
+             bat "allure serve results"
          }
  }
 }
