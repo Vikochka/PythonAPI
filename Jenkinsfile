@@ -15,6 +15,7 @@ node {
   }
 
  stage('Report') {
+            bat "allure --clean report"
             bat "allure generate results -o report"
              script {
                      allure([
