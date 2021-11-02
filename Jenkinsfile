@@ -14,17 +14,14 @@ node {
            bat "python -m pytest --alluredir results"
            bat" allure serve results"
   }
-  post('Reports') {
-    always{
-    script {
-             allure([
-                     includeProperties: false,
-                     jdk: '',
-                     properties: [],
-                     reportBuildPolicy: 'ALWAYS',
-                     results: [[path: 'allureresults']]
-             ])
-     }
-    }
+
+  stage("Report"){
+    allure([
+            includeProperties: false,
+            jdk: '',
+            properties: [],
+            reportBuildPolicy: 'ALWAYS',
+            results: [[path: 'allureresults']]
+    ])
   }
 }
