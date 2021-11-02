@@ -8,15 +8,7 @@ node {
       bat "${scannerHome}/bin/sonar-scanner"
     }
   }
-  stage("Report"){
-    allure([
-            includeProperties: false,
-            jdk: '',
-            properties: [],
-            reportBuildPolicy: 'ALWAYS',
-            results: [[path: 'allureresults']]
-    ])
-  }
+
   stage('Build') {
            git 'https://github.com/Vikochka/PythonAPI.git'
            // To run Maven on a Windows agent, use
@@ -24,5 +16,19 @@ node {
            bat" allure serve results"
   }
 
+ stage('Report') {
+         steps {
+             script {
+                     allure([
+                             includeProperties: false,
+                             jdk: '',
+                             properties: [],
+                             reportBuildPolicy: 'ALWAYS',
+                             results: [[path: '../results']]
+                     ])
+             }
+         }
+        }
+   }
 
 }
