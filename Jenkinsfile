@@ -12,12 +12,12 @@ node {
   stage('Build') {
            git 'https://github.com/Vikochka/PythonAPI.git'
            // To run Maven on a Windows agent, use
-           bat "python -m pytest -v  --alluredir results"
+           bat "python -m pytest -k  --alluredir results"
 
   }
 
  stage('Report') {
-            bat "allure serve results"
+            bat "allure generate results -o report"
              script {
                      allure([
                              includeProperties: false,
