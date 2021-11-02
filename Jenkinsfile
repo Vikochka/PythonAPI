@@ -17,7 +17,7 @@ node {
   }
 
  stage('Report') {
-         steps {
+            bat "allure serve results"
              script {
                      allure([
                              includeProperties: false,
@@ -27,6 +27,6 @@ node {
                              results: [[path: '../results']]
                      ])
              }
-         }
+
  }
 }
