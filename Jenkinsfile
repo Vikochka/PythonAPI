@@ -15,14 +15,14 @@ node {
   }
 
  stage('Report') {
-            bat "allure generate results -o report"
+            bat "allure generate allure-results --clean -o allure-report || true && allure report open -o allure-report"
              script {
                      allure([
                              includeProperties: false,
                              jdk: '',
                              properties: [],
                              reportBuildPolicy: 'ALWAYS',
-                             results: [[path: '../report']]
+                             results: [[path: '../allure-results']]
                      ])
              }
 
