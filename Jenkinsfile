@@ -13,7 +13,6 @@ node {
            git 'https://github.com/Vikochka/PythonAPI.git'
            // To run Maven on a Windows agent, use
            bat "python -m pytest -v  --alluredir results"
-           bat" allure serve results"
   }
 
  stage('Report') {
