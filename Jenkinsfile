@@ -11,7 +11,7 @@ node {
 
   stage('Build') {
            git 'https://github.com/Vikochka/PythonAPI.git'
-           bat "python -m pytest -k test --alluredir results"
+           bat "python -m pytest -k test --alluredir allure-results"
   }
 
  stage('Report') {
