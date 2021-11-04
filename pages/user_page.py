@@ -1,6 +1,7 @@
 import allure
 from loguru import logger
 from framework.BaseAdapter import BaseAdapter
+from framework.property_reader import PropertyReader
 from json_reader import JsonReader
 
 
@@ -21,19 +22,19 @@ class UserPage(BaseAdapter):
         logger.info(self.response.text)
 
     @allure.step('Users validation')
-    def validation_all_users(self):
+    def validation_all_users(self,id):
         users = self.response.json()
         assert users == JsonReader().json_reader('exected_result//users.json')
         for items in users:
-            assert users[5 - 1] == JsonReader().json_reader_get_part(
-                'exected_result//users.json', 5), \
+            assert users[id - 1] == JsonReader().json_reader_get_part(
+                'exected_result//users.json', id), \
                 f'Actual user is not equal {users}'
 
     @allure.step('User validation')
     def validation_user(self, status_code, number):
         users = self.response.json()
 
-        if status_code != 404:
+        if status_code != PropertyReader().get_property('..//config.properties', 'error.status'):
 
             with allure.step('Expected result'):
                 print(JsonReader().json_reader_get_part(

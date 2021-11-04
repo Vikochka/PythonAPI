@@ -12,4 +12,3 @@ class PropertyReader:
         with open(filename, 'rb') as read_prop:
             configs.load(read_prop)
         return configs[key].data
-

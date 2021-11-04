@@ -11,11 +11,11 @@ node {
 
   stage('Build') {
            git 'https://github.com/Vikochka/PythonAPI.git'
-           bat "python -m pytest -k test --alluredir allure-results"
+           bat "python -m pytest -rP test --alluredir allure-report"
   }
 
  stage('Report') {
-            bat "allure generate allure-results --clean -o allure-report || true && allure report open -o allure-report"
+            bat "allure generate allure-report --clean -o allure-report || true && allure report open -o allure-report"
              script {
                      allure([
                              includeProperties: false,

@@ -4,7 +4,7 @@ from pages.user_page import UserPage
 def test_get_all_users():
     p = UserPage()
     p.get_all_users('https://jsonplaceholder.typicode.com/users/', 200)
-    p.validation_all_users()
+    p.validation_all_users(5)
 
 
 def test_get_user():
